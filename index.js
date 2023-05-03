@@ -6,9 +6,12 @@ const resetButton = document.getElementById("reset");
 
 let playerScore = 0;
 let computerScore = 0;
+let gameOver = false;
 
 images.forEach(img => {
     img.addEventListener("click", function() {
+        if (gameOver) return; // Do not continue if the game is over
+
         let playerChoice = this.dataset.choice;
 
         const computerChoice = options[Math.floor(Math.random() * options.length)];
@@ -36,6 +39,7 @@ images.forEach(img => {
             let finalResult = playerScore > computerScore ? "Congratulations, you won the series!" : "Sorry, you lost the series.";
             messageDiv.textContent = `${finalResult} Your score: ${playerScore}, Computer's score: ${computerScore}`;
             resetButton.style.display = "block";
+            gameOver = true; // Set gameOver to true when the series is won
         }
     });
 });
@@ -46,5 +50,5 @@ resetButton.addEventListener("click", function() {
     messageDiv.textContent = "";
     scoreDiv.textContent = "";
     resetButton.style.display = "none";
+    gameOver = false; // Reset gameOver when starting a new series
 });
-
